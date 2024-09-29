@@ -2,12 +2,14 @@ package ru.mephi
 
 import kotlin.math.PI
 
+//массивы всех площадей и периметров (в тг ответили, что нужно вывести список с площадью/периметром каждой фигуры
 var areas: MutableList<Double> = mutableListOf()
 var perimeters: MutableList<Double> = mutableListOf()
 
 class WrongOperationTypeException(message: String): Exception(message)
 class BadPropertyException(message: String): Exception(message)
 
+//классы фигур
 open class Figure(val property: Double) {
     open val name: String = "ToBeEntered"
 }
@@ -25,7 +27,7 @@ class Square(property: Double) : Figure(property) {
         println("$name(property = $property)")
     }
 }
-
+//рабочие классы
 interface ConsoleService {
     fun work()
 }
@@ -62,7 +64,7 @@ object FigureServiceImpl : FigureService {
         println(perimeters)
     }
 }
-
+//работа с консолью
 object ConsoleServiceImpl : ConsoleService {
     override fun work() {
         while(true) {
@@ -82,7 +84,7 @@ object ConsoleServiceImpl : ConsoleService {
         println("Всего хорошего!")
     }
 }
-
+//работа с фигурами
 fun getOperation(entered: String): Int {
     when (entered) {
         "INSERT", "Insert", "insert" -> return 1
@@ -111,12 +113,13 @@ fun getArea() {
 fun getPerimeter() {
     FigureServiceImpl.getPerimeter()
 }
-
+//проверка на адекватное значение property, выброс Exception в FigureServiceImpl
 fun propertyCheck(property: Double) {
     if (property.isNaN() || property <= 0) {
         throw BadPropertyException("Введено неверное значение параметра property: $property")
     }
 }
+
 fun main() {
     ConsoleServiceImpl.work()
 }
